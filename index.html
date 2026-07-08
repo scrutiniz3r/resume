@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F8F1E3">
+<title>Abbiraam</title>
+<meta name="description" content="Abbiraam — engineer at Tata Elxsi, building toward machine learning. ECE from SCTCE, ex-ISRO intern.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-display:"Playfair Display",Georgia,serif; /* ← the Days Since serif */
+    --font-body:"Inter",system-ui,sans-serif;
+    --bg:#F8F1E3;         /* warm cream */
+    --card:#FFFFFF;
+    --ink:#4C4036;        /* warm dark brown */
+    --dim:#A89B8B;        /* "days since" gray */
+    --line:#EADFCD;
+    --terracotta:#C0703C; /* companies */
+    --green:#6F8F52;      /* education */
+    --blue:#7C93B5;       /* machine learning */
+    --gold:#C2A03F;       /* play & people */
+    --brown:#93806E;
+    --shadow:0 3px 14px rgba(93,70,45,.09);
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:var(--font-body);font-size:16px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  ::selection{background:var(--terracotta);color:#fff}
+  a{color:inherit}
+
+  /* ---------- corner chrome ---------- */
+  .corner{position:fixed;z-index:50;font-size:12.5px;color:var(--dim);letter-spacing:.02em}
+  .corner a{color:var(--brown);text-decoration:none;border-bottom:1px dotted var(--brown)}
+  .corner a:hover{color:var(--ink)}
+  .corner.tl{top:20px;left:24px}
+  .corner.tr{top:20px;right:24px;text-align:right}
+  .corner .name{color:var(--ink);font-family:var(--font-display);font-style:italic;font-weight:600;font-size:15px}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100svh;display:flex;align-items:center;padding:120px 24px 150px;position:relative}
+  .hero-inner{max-width:1180px;margin:0 auto;width:100%}
+  #heroText{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(27px,4.8vw,60px);line-height:1.32;letter-spacing:-.01em;
+  }
+  #heroText .hl{text-decoration:none;font-style:italic;font-weight:500;border-bottom:none}
+  #heroText .hl:hover{opacity:.75}
+  .c-terracotta{color:var(--terracotta)}
+  .c-green{color:var(--green)}
+  .c-blue{color:var(--blue)}
+  .c-gold{color:var(--gold)}
+  .w{display:inline-block;will-change:transform;cursor:grab;border-radius:8px}
+  .physics-on .w{touch-action:none;user-select:none}
+  .physics-on .w:active{cursor:grabbing}
+
+  .hero-actions{position:absolute;left:24px;bottom:28px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  /* the black "All" chip from Days Since */
+  .pill{
+    font-family:var(--font-body);font-weight:600;font-size:13.5px;
+    background:#2E2620;border:1px solid #2E2620;color:#FDF8EE;
+    padding:10px 18px;border-radius:99px;cursor:pointer;transition:transform .15s,box-shadow .15s;
+    box-shadow:var(--shadow);
+  }
+  .pill:hover{transform:translateY(-1px)}
+  .pill:focus-visible{outline:2px solid var(--terracotta);outline-offset:2px}
+  .scroll-hint{position:absolute;right:24px;bottom:32px;font-size:12.5px;color:var(--dim)}
+  .scroll-hint a{text-decoration:none;color:var(--brown);border-bottom:1px dotted var(--brown)}
+  .scroll-hint a:hover{color:var(--ink)}
+
+  /* ---------- days-since counter tiles ---------- */
+  .tiles{max-width:1180px;margin:-70px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:5}
+  .tile{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:22px 24px 20px;border-top:5px solid var(--terracotta);
+  }
+  .tile.t-green{border-top-color:var(--green)}
+  .tile.t-blue{border-top-color:var(--blue)}
+  .tile .num{font-family:var(--font-display);font-weight:700;font-size:clamp(34px,4vw,48px);line-height:1.05;color:var(--brown)}
+  .tile.t-green .num{color:var(--green)}
+  .tile.t-blue .num{color:var(--blue)}
+  .tile .since{font-size:12px;color:var(--dim);letter-spacing:.04em;margin:4px 0 6px}
+  .tile .what{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:19px;color:var(--terracotta)}
+  .tile.t-green .what{color:var(--green)}
+  .tile.t-blue .what{color:var(--blue)}
+
+  /* ---------- sections ---------- */
+  main{max-width:860px;margin:0 auto;padding:40px 24px 40px}
+  section{padding:58px 0}
+  .label{display:flex;align-items:baseline;gap:14px;margin-bottom:30px}
+  .label .n{font-family:var(--font-display);font-weight:700;font-size:34px;color:var(--brown);opacity:.55}
+  .label .t{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:600}
+
+  .entry{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:26px 28px;margin-bottom:22px;border-top:5px solid var(--terracotta);
+  }
+  .entry:last-child{margin-bottom:0}
+  .entry.e-green{border-top-color:var(--green)}
+  .entry.e-blue{border-top-color:var(--blue)}
+  .entry.e-gold{border-top-color:var(--gold)}
+  .entry-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap}
+  .entry h3{font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-.01em}
+  .entry.e-blue h3 em, .entry h3 em{font-style:italic;font-weight:500}
+  .entry .where{color:var(--dim);font-size:14.5px;margin-top:3px}
+  .when{font-size:12px;color:var(--dim);letter-spacing:.08em;white-space:nowrap;font-weight:600;text-transform:uppercase}
+  .entry ul{list-style:none;margin-top:14px;display:grid;gap:9px;color:#6B5D4F;font-size:15.5px}
+  .entry li{padding-left:20px;position:relative}
+  .entry li::before{content:"—";position:absolute;left:0;color:var(--dim)}
+
+  /* pastel chips, like the Days Since filters */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .chip{font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:99px;border:1px solid transparent}
+  .chip.peach{background:#FBE3CF;color:#9A5B2B;border-color:#F2D2B4}
+  .chip.yellow{background:#FCEEC9;color:#8F7420;border-color:#F1DFA6}
+  .chip.green{background:#DFEBD4;color:#4F6E38;border-color:#CCDFBB}
+  .chip.blue{background:#DAE5F2;color:#47618A;border-color:#C4D4E8}
+  .chip.pink{background:#F3E0DC;color:#8A5548;border-color:#E7CCC6}
+
+  .story{color:#6B5D4F;font-size:16.5px;max-width:66ch}
+  .story p{margin-bottom:16px}
+  .story em{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:1.06em}
+  .story .c-green,.story .c-terracotta,.story .c-blue,.story .c-gold{font-weight:600}
+
+  .role-list{display:grid;gap:0;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-top:22px}
+  .role-list .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 24px;border-bottom:1px solid var(--line)}
+  .role-list .row:last-child{border-bottom:none}
+  .role-list .r{font-weight:600}
+  .role-list .o{color:var(--dim);font-size:14.5px}
+
+  /* ---------- footer ---------- */
+  footer{padding:64px 24px 90px}
+  .foot-inner{max-width:860px;margin:0 auto}
+  footer h2{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,3.4vw,36px);letter-spacing:-.01em;max-width:24ch}
+  footer h2 a{color:var(--terracotta);font-style:italic;text-decoration:none;border-bottom:2px solid var(--terracotta)}
+  .foot-links{margin-top:34px;display:flex;gap:26px;flex-wrap:wrap;font-size:14px;font-weight:600}
+  .foot-links a{color:var(--brown);text-decoration:none;border-bottom:1px dotted var(--brown);padding-bottom:2px}
+  .foot-links a:hover{color:var(--ink)}
+  .foot-note{margin-top:40px;font-size:12px;color:var(--dim)}
+
+  @media (max-width:760px){
+    .hero{padding:100px 20px 150px}
+    .corner.tr{display:none}
+    .tiles{grid-template-columns:1fr;margin-top:-90px}
+    .entry-head{flex-direction:column;gap:2px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    #dropBtn,.drop-hint{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"><span class="name">Abbiraam</span> <span class="drop-hint" style="color:var(--dim)"> · the words are heavier than they look</span></div>
+<div class="corner tr">want to talk about a role?<br><a href="mailto:you@example.com">you@example.com</a></div>
+
+<header class="hero" id="top">
+  <div class="hero-inner">
+    <p id="heroText">I'm Abbiraam. For three years at <a class="hl c-terracotta" href="#experience">Tata Elxsi</a> in Trivandrum, I've delivered timely, ML-driven analytics support — building the data pipelines and integrations that insights run on. Before that I made microcontrollers talk at <a class="hl c-terracotta" href="#experience">ISRO</a> and predicted battery health at <a class="hl c-green" href="#education">SCTCE</a>, where I also led everything from a <a class="hl c-gold" href="#leadership">robotics club to the cultural fest</a>. These days I ship <a class="hl c-blue" href="#ml">small apps that listen when you speak</a> — and on fest weekends, you'll find me running sales at a <a class="hl c-gold" href="#leadership">Bebo-bear</a> stall.</p>
+  </div>
+  <div class="hero-actions">
+    <button class="pill" id="dropBtn" type="button">drop the words</button>
+  </div>
+  <div class="scroll-hint"><a href="#experience">or scroll for the boring-format version ↓</a></div>
+</header>
+
+<div class="tiles" aria-label="Days since counters">
+  <div class="tile">
+    <div class="num" id="numElxsi">—</div>
+    <div class="since">days since</div>
+    <div class="what">Joining Tata Elxsi</div>
+  </div>
+  <div class="tile t-green">
+    <div class="num" id="numIsro">—</div>
+    <div class="since">days since</div>
+    <div class="what">My ISRO internship</div>
+  </div>
+  <div class="tile t-blue">
+    <div class="num" id="numDrop">∞</div>
+    <div class="since">days since</div>
+    <div class="what">This page fell apart</div>
+    <div class="since" style="margin-top:6px">hint: try the button up there</div>
+  </div>
+</div>
+
+<main>
+  <section id="experience">
+    <div class="label"><span class="n">01</span><span class="t">Where I work</span></div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <div><h3>Engineer · <em>Tata Elxsi</em></h3><div class="where">Trivandrum, India</div></div>
+        <span class="when">Jul 2023 — Present</span>
+      </div>
+      <ul>
+        <li>Contributed to the Comcast-DevX application migration within an agile offshore model, supporting scalable platform transitions and improved data accessibility for downstream analytics and ML-driven insights</li>
+        <li>Designed and implemented Python-based data automation pipelines for ingestion, preprocessing, and user provisioning in the Octane ecosystem — clean, structured, ML-ready datasets with far less manual intervention</li>
+        <li>Spearheaded the Jira–Octane data integration using MicroFocus Connect, enabling cross-platform traceability, analytics, and real-time insight generation across issue and test management tools</li>
+      </ul>
+      <div class="chips"><span class="chip peach">Python</span><span class="chip blue">Data pipelines</span><span class="chip yellow">Octane</span><span class="chip green">Jira</span><span class="chip pink">MicroFocus Connect</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <div><h3>Intern · <em>ISRO</em></h3><div class="where">Trivandrum, India</div></div>
+        <span class="when">Dec 2022 — Jan 2023</span>
+      </div>
+      <ul>
+        <li>Implemented circular buffer logic and designed a USB push/pull communication protocol on the STM32F407G DISC-1 microprocessor</li>
+        <li>Developed in embedded C with STM32CubeIDE, working directly with hardware abstraction layers</li>
+        <li>Worked closely with ISRO engineers on a real-time communication project — embedded systems and low-level memory handling, up close</li>
+      </ul>
+      <div class="chips"><span class="chip blue">STM32</span><span class="chip peach">Embedded C</span><span class="chip green">HAL</span><span class="chip yellow">Real-time</span></div>
+    </div>
+  </section>
+
+  <section id="ml">
+    <div class="label"><span class="n">02</span><span class="t">Things I built</span></div>
+
+    <div class="entry e-blue">
+      <div class="entry-head">
+        <div><h3><em>Days Since</em> — ML-powered habit tracker</h3><div class="where">The app this page is dressed like</div></div>
+        <span class="when">Recent</span>
+      </div>
+      <ul>
+        <li>Single-file PWA with voice logging driven by a fine-tuned DistilBERT intent classifier and zero-shot classification, served through a Cloudflare Worker</li>
+        <li>Model and code published openly on Hugging Face and GitHub</li>
+      </ul>
+      <div class="chips"><span class="chip blue">DistilBERT</span><span class="chip peach">NLP</span><span class="chip green">PWA</span><span class="chip yellow">Cloudflare Workers</span></div>
+    </div>
+
+    <div class="entry e-blue">
+      <div class="entry-head">
+        <div><h3>Battery Management System — <em>KSRTC EV Mini-Bus</em></h3><div class="where">SCTCE × KSRTC</div></div>
+        <span class="when">Oct 2022 — Apr 2023</span>
+      </div>
+      <ul>
+        <li>Designed, simulated, and optimized a battery management system for an electric mini-bus, in collaboration between SCTCE and KSRTC, using MATLAB and machine learning techniques</li>
+      </ul>
+      <div class="chips"><span class="chip peach">MATLAB</span><span class="chip blue">ML</span><span class="chip green">BMS</span></div>
+    </div>
+
+    <div class="entry e-blue">
+      <div class="entry-head">
+        <div><h3>SOH estimation — <em>ANN vs GPR</em></h3><div class="where">Lithium-ion battery health</div></div>
+        <span class="when">Jan 2023 — Apr 2023</span>
+      </div>
+      <ul>
+        <li>Compared the accuracy of Artificial Neural Networks and Gaussian Process Regression models in predicting lithium-ion battery state of health</li>
+      </ul>
+      <div class="chips"><span class="chip blue">ANN</span><span class="chip green">GPR</span><span class="chip yellow">Li-ion</span></div>
+    </div>
+
+    <div class="entry e-blue">
+      <div class="entry-head">
+        <div><h3><em>Predicto-R</em> — accident prevention module</h3><div class="where">V2V / V2I communication</div></div>
+        <span class="when">Embedded</span>
+      </div>
+      <ul>
+        <li>Developed a vehicle-to-vehicle and vehicle-to-infrastructure communication system using RF modules and Arduino for traffic-signal prediction and accident prevention</li>
+      </ul>
+      <div class="chips"><span class="chip peach">RF</span><span class="chip blue">Arduino</span><span class="chip green">V2V / V2I</span></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="label"><span class="n">03</span><span class="t">How I got here</span></div>
+    <div class="story">
+      <p>It started at <em class="c-green">Kendriya Vidyalaya Pattom, Shift 2</em> — a gold medal in the school-level maths olympiad, a bronze in English, and a perfect <em class="c-green">10 CGPA</em> in the 2016 CBSE Class X boards.</p>
+      <p>Then bio-maths for Class XI–XII, where I co-designed a <em class="c-gold">disabled-friendly toilet</em> for a Science Congress competition — my first taste of engineering built around actual human needs. Finished with <em class="c-green">96%</em> in the boards, second at school level, wrote both NEET and KEAM, and chose circuits.</p>
+      <p>At <em class="c-green">SCT College of Engineering</em> I took Electronics &amp; Communication and graduated with an <em class="c-green">8.9 CGPA</em> — plus a <em class="c-blue">Minor in Machine Learning</em> (the plot twist this whole page is about) and <em class="c-green">Honours in MEMS</em>.</p>
+    </div>
+  </section>
+
+  <section id="leadership">
+    <div class="label"><span class="n">04</span><span class="t">Teams, stages &amp; stalls</span></div>
+
+    <div class="entry e-gold">
+      <div class="entry-head">
+        <div><h3>Sales Volunteer · <em>Bebo-bear</em></h3><div class="where">Fests across Trivandrum</div></div>
+        <span class="when">Ongoing</span>
+      </div>
+      <ul>
+        <li>Volunteer on the sales side for Bebo-bear at fests around Trivandrum — pitching to strangers, handling a live stall, and learning how products actually get sold face to face</li>
+      </ul>
+    </div>
+
+    <div class="role-list">
+      <div class="row"><span class="r">Vice Chair</span><span class="o">Industrial Applications Society, IEEE SCT SB</span></div>
+      <div class="row"><span class="r">Content Head</span><span class="o">IEDC, SCTCE</span></div>
+      <div class="row"><span class="r">Technical Head</span><span class="o">Cybots — robotics club of SCTCE</span></div>
+      <div class="row"><span class="r">Technical Head</span><span class="o">CULT Away 2023 — cultural fest</span></div>
+    </div>
+  </section>
+</main>
+
+<footer id="contacts">
+  <div class="foot-inner">
+    <h2>If you would like to talk about a role or a project, write to <a href="mailto:you@example.com">you@example.com</a></h2>
+    <div class="foot-links">
+      <a href="https://github.com/scrutiniz3r">github</a>
+      <a href="https://huggingface.co/scrutiniz3r">hugging face</a>
+      <a href="https://www.linkedin.com/">linkedin</a>
+    </div>
+    <p class="foot-note">© Abbiraam · Trivandrum, India · yes, the words up top really do fall</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+(function(){
+  // ----- days-since counters -----
+  function daysSince(iso){
+    var ms = Date.now() - new Date(iso + 'T00:00:00').getTime();
+    return Math.max(0, Math.floor(ms / 86400000));
+  }
+  document.getElementById('numElxsi').textContent = daysSince('2023-07-01').toLocaleString();
+  document.getElementById('numIsro').textContent = daysSince('2023-01-31').toLocaleString();
+
+  // ----- physics -----
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hero = document.getElementById('heroText');
+  var btn = document.getElementById('dropBtn');
+  if(!btn) return;
+
+  function wrapWords(el){
+    var nodes = Array.prototype.slice.call(el.childNodes);
+    nodes.forEach(function(node){
+      if(node.nodeType === 3){
+        var frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function(part){
+          if(/^\s+$/.test(part) || part === ''){ frag.appendChild(document.createTextNode(part)); }
+          else{
+            var s = document.createElement('span');
+            s.className = 'w'; s.textContent = part;
+            frag.appendChild(s);
+          }
+        });
+        el.replaceChild(frag, node);
+      } else if(node.nodeType === 1){
+        var wrap = document.createElement('span');
+        wrap.className = 'w';
+        el.replaceChild(wrap, node);
+        wrap.appendChild(node);
+      }
+    });
+  }
+  wrapWords(hero);
+
+  if(reduced || typeof Matter === 'undefined') return;
+
+  var engine, mouseConstraint, bodies = [], raf, active = false, everDropped = false;
+  var words = hero.querySelectorAll('.w');
+
+  function drop(){
+    active = true;
+    document.body.classList.add('physics-on');
+    if(!everDropped){
+      everDropped = true;
+      document.getElementById('numDrop').textContent = '0';
+    }
+    engine = Matter.Engine.create();
+    engine.gravity.y = 1.1;
+    var W = window.innerWidth, H = window.innerHeight;
+    var thick = 200;
+    Matter.Composite.add(engine.world, [
+      Matter.Bodies.rectangle(W/2, H + thick/2 - 4, W*3, thick, {isStatic:true}),
+      Matter.Bodies.rectangle(-thick/2, H/2, thick, H*4, {isStatic:true}),
+      Matter.Bodies.rectangle(W + thick/2, H/2, thick, H*4, {isStatic:true}),
+      Matter.Bodies.rectangle(W/2, -H - thick/2, W*3, thick, {isStatic:true})
+    ]);
+
+    bodies = [];
+    words.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.width === 0) return;
+      var body = Matter.Bodies.rectangle(r.left + r.width/2, r.top + r.height/2, r.width, r.height, {
+        restitution:0.35, friction:0.35, frictionAir:0.012,
+        chamfer:{radius:Math.min(8, r.height/2)}
+      });
+      Matter.Body.setVelocity(body, {x:(Math.random()-0.5)*4, y:Math.random()*-2});
+      Matter.Body.setAngularVelocity(body, (Math.random()-0.5)*0.12);
+      Matter.Composite.add(engine.world, body);
+      el.dataset.w = r.width; el.dataset.h = r.height;
+      el.style.position = 'fixed';
+      el.style.left = '0'; el.style.top = '0';
+      el.style.zIndex = '40';
+      bodies.push({el:el, body:body});
+    });
+
+    var mouse = Matter.Mouse.create(document.body);
+    mouseConstraint = Matter.MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {stiffness:0.18, render:{visible:false}}
+    });
+    Matter.Composite.add(engine.world, mouseConstraint);
+    mouse.element.removeEventListener('wheel', mouse.mousewheel);
+    mouse.element.removeEventListener('DOMMouseScroll', mouse.mousewheel);
+
+    var last = performance.now();
+    (function tick(now){
+      raf = requestAnimationFrame(tick);
+      var dt = Math.min(now - last, 33); last = now;
+      Matter.Engine.update(engine, dt);
+      bodies.forEach(function(b){
+        var p = b.body.position;
+        b.el.style.transform = 'translate(' + (p.x - b.el.dataset.w/2) + 'px,' + (p.y - b.el.dataset.h/2) + 'px) rotate(' + b.body.angle + 'rad)';
+      });
+    })(last);
+
+    btn.textContent = 'put them back';
+  }
+
+  function reset(){
+    active = false;
+    cancelAnimationFrame(raf);
+    if(engine){ Matter.Composite.clear(engine.world, false); Matter.Engine.clear(engine); engine = null; }
+    document.body.classList.remove('physics-on');
+    words.forEach(function(el){
+      el.style.position = ''; el.style.left = ''; el.style.top = '';
+      el.style.transform = ''; el.style.zIndex = '';
+    });
+    btn.textContent = 'drop the words';
+  }
+
+  btn.addEventListener('click', function(){ active ? reset() : drop(); });
+  window.addEventListener('resize', function(){ if(active){ reset(); } });
+})();
+</script>
+</body>
+</html>
