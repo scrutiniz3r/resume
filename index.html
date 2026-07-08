@@ -49,9 +49,10 @@
   .hero-inner{max-width:1180px;margin:0 auto;width:100%}
   #heroText{
     font-family:var(--font-display);font-weight:600;
-    font-size:clamp(27px,4.8vw,60px);line-height:1.32;letter-spacing:-.01em;
+    font-size:clamp(26px,3.4vw,42px);line-height:1.38;letter-spacing:-.01em;
   }
   #heroText .hl{text-decoration:none;font-style:italic;font-weight:500;border-bottom:none}
+  #heroText .hero-line + .hero-line{margin-top:.85em}
   #heroText .hl:hover{opacity:.75}
   .c-terracotta{color:var(--terracotta)}
   .c-green{color:var(--green)}
@@ -108,6 +109,8 @@
   .entry.e-gold{border-top-color:var(--gold)}
   .entry-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap}
   .entry h3{font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-.01em}
+  .entry h3 a{color:inherit;text-decoration:none;border-bottom:2px solid currentColor}
+  .entry h3 a:hover{opacity:.75}
   .entry.e-blue h3 em, .entry h3 em{font-style:italic;font-weight:500}
   .entry .where{color:var(--dim);font-size:14.5px;margin-top:3px}
   .when{font-size:12px;color:var(--dim);letter-spacing:.08em;white-space:nowrap;font-weight:600;text-transform:uppercase}
@@ -164,7 +167,11 @@
 
 <header class="hero" id="top">
   <div class="hero-inner">
-    <p id="heroText">I'm Abbiraam. For three years at <a class="hl c-terracotta" href="#experience">Tata Elxsi</a> in Trivandrum, I've delivered timely, ML-driven analytics support — building the data pipelines and integrations that insights run on. Before that I made microcontrollers talk at <a class="hl c-terracotta" href="#experience">ISRO</a> and predicted battery health at <a class="hl c-green" href="#education">SCTCE</a>, where I also led everything from a <a class="hl c-gold" href="#leadership">robotics club to the cultural fest</a>. These days I ship <a class="hl c-blue" href="#ml">small apps that listen when you speak</a> — and on fest weekends, you'll find me running sales at a <a class="hl c-gold" href="#leadership">Bebo-bear</a> stall.</p>
+    <div id="heroText">
+      <p class="hero-line">I'm Abbiraam. Three years at <a class="hl c-terracotta" href="#experience">Tata Elxsi</a> in Trivandrum have taught me a lil bit of Java, a lot-a-bit of Python, and how to keep ML-driven analytics arriving on time.</p>
+      <p class="hero-line">These days I ship <a class="hl c-blue" href="#ml">small apps that listen when you speak</a> — and on fest weekends, you'll find me talking right back, selling at a <a class="hl c-gold" href="#leadership">Bebo-bear</a> stall.</p>
+      <p class="hero-line">Rewind further: I spent a winter making microcontrollers talk at <a class="hl c-terracotta" href="#experience">ISRO</a>, learned to predict battery health at <a class="hl c-green" href="#education">SCTCE</a>, and somehow ended up running everything from a <a class="hl c-gold" href="#leadership">robotics club to the cultural fest</a>.</p>
+    </div>
   </div>
   <div class="hero-actions">
     <button class="pill" id="dropBtn" type="button">drop the words</button>
@@ -205,7 +212,7 @@
         <li>Designed and implemented Python-based data automation pipelines for ingestion, preprocessing, and user provisioning in the Octane ecosystem — clean, structured, ML-ready datasets with far less manual intervention</li>
         <li>Spearheaded the Jira–Octane data integration using MicroFocus Connect, enabling cross-platform traceability, analytics, and real-time insight generation across issue and test management tools</li>
       </ul>
-      <div class="chips"><span class="chip peach">Python</span><span class="chip blue">Data pipelines</span><span class="chip yellow">Octane</span><span class="chip green">Jira</span><span class="chip pink">MicroFocus Connect</span></div>
+      <div class="chips"><span class="chip peach">Python</span><span class="chip pink">Java</span><span class="chip blue">Data pipelines</span><span class="chip yellow">Octane</span><span class="chip green">Jira</span><span class="chip peach">MicroFocus Connect</span></div>
     </div>
 
     <div class="entry">
@@ -227,7 +234,7 @@
 
     <div class="entry e-blue">
       <div class="entry-head">
-        <div><h3><em>Days Since</em> — ML-powered habit tracker</h3><div class="where">The app this page is dressed like</div></div>
+        <div><h3><a href="https://scrutiniz3r.github.io/days-since/" target="_blank" rel="noopener"><em>Days Since</em></a> — ML-powered habit tracker</h3><div class="where">The app this page is dressed like — tap the title to try it</div></div>
         <span class="when">Recent</span>
       </div>
       <ul>
@@ -285,7 +292,7 @@
 
     <div class="entry e-gold">
       <div class="entry-head">
-        <div><h3>Sales Volunteer · <em>Bebo-bear</em></h3><div class="where">Fests across Trivandrum</div></div>
+        <div><h3>Sales Volunteer · <a href="https://www.instagram.com/thebebobear?igsh=NHF1dHJoNjh4czU2" target="_blank" rel="noopener"><em>Bebo-bear</em></a></h3><div class="where">Fests across Trivandrum — find them on Instagram</div></div>
         <span class="when">Ongoing</span>
       </div>
       <ul>
@@ -308,7 +315,7 @@
     <div class="foot-links">
       <a href="https://github.com/scrutiniz3r">github</a>
       <a href="https://huggingface.co/scrutiniz3r">hugging face</a>
-      <a href="https://www.linkedin.com/">linkedin</a>
+      <a href="https://www.linkedin.com/in/abbiraam">linkedin</a>
     </div>
     <p class="foot-note">© Abbiraam · Trivandrum, India · yes, the words up top really do fall</p>
   </div>
@@ -353,7 +360,7 @@
       }
     });
   }
-  wrapWords(hero);
+  document.querySelectorAll('#heroText .hero-line').forEach(wrapWords);
 
   if(reduced || typeof Matter === 'undefined') return;
 
